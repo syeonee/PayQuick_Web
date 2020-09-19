@@ -57,6 +57,8 @@
         :headers="headers"
         :items="payInfos"
         :search="search"
+	sort-by="payNum"
+	sort-desc="true"
       ></v-data-table>
     </v-card>
     </v-main>
@@ -93,7 +95,7 @@ export default {
       headers: [
         {
           text: '결제번호',
-          align: 'start',
+          align: 'center',
           value: 'payNum',
         },
         { text: '결제일시', value: 'payDate' },

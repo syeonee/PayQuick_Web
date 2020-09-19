@@ -56,6 +56,8 @@
         :headers="headers"
         :items="totalInfos"
         :search="search"
+	sort-by="date"
+	sort-desc="true"
       ></v-data-table>
     </v-card>
     </v-main>
@@ -92,7 +94,7 @@ export default {
       headers: [
         {
           text: '날짜',
-          align: 'start',
+          align: 'center',
           value: 'date',
         },
         { text: '일 매출 금액', value: 'total' }

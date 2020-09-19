@@ -47,47 +47,47 @@
 	<v-flex xs12 sm6 md3 class="pb-2 ma-6">
             <count-card
               title="일 매출"
-              :number="daySales"
+              :number="daySale[0]"
               tIcon="mdi-calculator"
               tIconColor="warning"
               bIcon="mdi-update"
               bIconColor="success"
-              :bText="dayUpdate"
+              :bText="c_sale"
             ></count-card>
 	</v-flex>
         <v-flex xs12 sm6 md3 class="pb-2 ma-6">
             <count-card
               title="일 판매량"
-              :number="daySalesRate"
+              :number="dayCount[0]"
               tIcon="mdi-counter"
               tIconColor="warning"
               bIcon="mdi-update"
               bIconColor="success"
-              :bText="rateUpdate"
+              :bText="c_count"
             ></count-card>
         </v-flex>
         <v-flex xs12 sm6 md3 class="pb-2 ma-6">
             <count-card
               title="월 매출"
-              :number="monthSales"
+              :number="monthSale[0]"
               tIcon="mdi-calculator"
               tIconColor="warning"
               bIcon="mdi-update"
               bIconColor="success"
-              :bText="monthUpdate"
+              :bText="c_mon"
             ></count-card>
         </v-flex>
         <v-flex xs12 sm4 class="pb-2 ma-6">
           <chart-card
-            title="주간 사용자 현황"
-            :data="[3, 1, 2, 1, 0, 4, 2]"
+            title="주간 판매량 현황"
+            :data="count"
             :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
           ></chart-card>
         </v-flex>
         <v-flex xs12 sm4 class="pb-2 ma-6">
           <chart-card
-            title="주간 조회수 현황"
-            :data="[33, 22, 2, 43, 33, 1, 55]"
+            title="주간 매출액 현황"
+            :data="sale"
             :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
           ></chart-card>
         </v-flex>
@@ -109,6 +109,44 @@
 	.catch((err) => {
             console.log(err)
         })
+	this.$http.get(`/api/home/daysale/${id}`)
+        .then((response) => {
+            this.daySale = response.data
+	    this.c_sale = parseInt(this.daySale[0])-parseInt(this.daySale[1])
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        this.$http.get(`/api/home/monthsale/${id}`)
+        .then((response) => {
+            this.monthSale = response.data
+	    this.c_mon = parseInt(this.monthSale[0])-parseInt(this.monthSale[1])
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        this.$http.get(`/api/home/daycount/${id}`)
+        .then((response) => {
+            this.dayCount = response.data
+	    this.c_count = parseInt(this.dayCount[0])-parseInt(this.dayCount[1])
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        this.$http.get(`/api/home/sale/${id}`)
+        .then((response) => {
+            this.sale = response.data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        this.$http.get(`/api/home/count/${id}`)
+        .then((response) => {
+            this.count = response.data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     },
     components: {
         countCard,
@@ -118,9 +156,26 @@
     },
     data: function () {
       var id = this.$route.params.id
+      var c_sale,c_mon,c_count;
       return {
         user: {
         },
+        daySale: {
+        },
+        monthSale: {
+        },
+        dayCount: {
+        },
+        sale: {
+        },
+        count: {
+        },
+	c_sale:{
+	},
+	c_mon:{
+	},
+	c_count:{
+	},
         drawer: null,
         items: [
           { icon: 'mdi-home-account', text: 'Home' , link: `/home/${id}`},

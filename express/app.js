@@ -13,6 +13,7 @@ var movies = require('./routes/movies');
 var payment = require('./routes/payment');
 var totalSales = require('./routes/totalSales');
 var stock = require('./routes/stock');
+var home = require('./routes/dashboard');
 
 var app = express();
 app.use(require('connect-history-api-fallback')())
@@ -50,6 +51,7 @@ app.use('/api/movies', movies);
 app.use('/api/pay', payment);
 app.use('/api/total', totalSales);
 app.use('/api/stock', stock);
+app.use('/api/home', home);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
